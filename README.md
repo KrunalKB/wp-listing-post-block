@@ -1,2 +1,2 @@
-# wp-wp-latest-post-block
+# wp-latest-post-block
 Display and filter latest posts.
