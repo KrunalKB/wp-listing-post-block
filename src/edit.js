@@ -8,7 +8,8 @@ import { useSelect } from "@wordpress/data";
 import "./editor.scss";
 
 export default function Edit({ attributes, setAttributes }) {
-	const { numberOfPosts, displayFeaturedImage } = attributes;
+	const { numberOfPosts, displayFeaturedImage, order, orderBy, categories } =
+		attributes;
 
 	const onDisplayFeaturedImageChange = (value) => {
 		setAttributes({ displayFeaturedImage: value });
@@ -18,16 +19,52 @@ export default function Edit({ attributes, setAttributes }) {
 		setAttributes({ numberOfPosts: value });
 	};
 
+	const catIds =
+		categories && categories.length > 0 ? categories.map((cat) => cat.id) : [];
+
+	const onCategoryChange = (values) => {
+		const hasNoSuggestions = values.some(
+			(value) => typeof value == "string" && !catSuggestions[value]
+		);
+		if (hasNoSuggestions) {
+			return "No matches found...";
+		}
+
+		const updateCats = values.map((token) => {
+			return typeof token == "string" ? catSuggestions[token] : token;
+		});
+
+		setAttributes({ categories: updateCats });
+	};
+
+	const allCats = useSelect((select) => {
+		return select("core").getEntityRecords("taxonomy", "category", {
+			per_page: -1,
+		});
+	}, []);
+
+	const catSuggestions = {};
+	if (allCats) {
+		for (let i = 0; i < allCats.length; i++) {
+			const cat = allCats[i];
+			catSuggestions[cat.name] = cat;
+		}
+	}
+
 	const posts = useSelect(
 		(select) => {
 			return select("core").getEntityRecords("postType", "post", {
 				per_page: numberOfPosts,
 				_embed: true,
+				order,
+				orderBy: orderBy,
+				categories: catIds,
 			});
 		},
-		[numberOfPosts]
+		[numberOfPosts, order, orderBy, categories]
 	);
-	console.log(posts);
+	// wp.data.select('core').getEntityRecords('postType','post',{per_page:5,_embed:true})
+
 	return (
 		<>
 			<InspectorControls>
@@ -40,6 +77,16 @@ export default function Edit({ attributes, setAttributes }) {
 					<QueryControls
 						numberOfItems={numberOfPosts}
 						onNumberOfItemsChange={onNumberOfItemsChange}
+						maxItems={10}
+						minItems={1}
+						orderBy={orderBy}
+						onOrderByChange={(value) => setAttributes({ orderBy: value })}
+						order={order}
+						onOrderChange={(value) => setAttributes({ order: value })}
+						// categoriesList={allCats}
+						categorySuggestions={catSuggestions}
+						selectedCategories={categories}
+						onCategoryChange={onCategoryChange}
 					/>
 				</PanelBody>
 			</InspectorControls>
@@ -56,7 +103,8 @@ export default function Edit({ attributes, setAttributes }) {
 							<li key={post.id}>
 								{displayFeaturedImage && featuredImage && (
 									<img
-										src={featuredImage.media_details.sizes.medium.source_url}
+										src={featuredImage.source_url}
+										// src={featuredImage.media_details.sizes.medium.source_url}
 										alt={featuredImage.alt_text}
 									/>
 								)}

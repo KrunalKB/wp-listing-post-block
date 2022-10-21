@@ -14,10 +14,15 @@
  */
 
 function render_wp_latest_post_block( $attributes ) {
-	$args         = array(
+	$args = array(
 		'posts_per_page' => $attributes['numberOfPosts'],
 		'post_status'    => 'publish',
+		'order'          => $attributes['order'],
+		'orderBy'        => $attributes['orderBy'],
 	);
+	if ( isset( $attributes['categories'] ) ) {
+		$args['category__in'] = array_column( $attributes['categories'] ,'id');
+	}
 	$recent_posts = get_posts( $args );
 	$posts        = '<ul ' . get_block_wrapper_attributes() . ' >';
 	foreach ( $recent_posts as $post ) {
