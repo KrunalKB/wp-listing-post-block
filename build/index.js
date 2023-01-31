@@ -107,7 +107,7 @@ function Edit(_ref) {
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.QueryControls, {
     numberOfItems: numberOfPosts,
     onNumberOfItemsChange: onNumberOfItemsChange,
-    maxItems: 10,
+    maxItems: 100,
     minItems: 1,
     orderBy: orderBy,
     onOrderByChange: value => setAttributes({
@@ -126,8 +126,7 @@ function Edit(_ref) {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
       key: post.id
     }, displayFeaturedImage && featuredImage && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-      src: featuredImage.source_url // src={featuredImage.media_details.sizes.medium.source_url}
-      ,
+      src: featuredImage.source_url,
       alt: featuredImage.alt_text
     }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h5", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
       href: post.link
@@ -293,7 +292,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ (function(module) {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"create-block/wp-latest-post-block","version":"0.1.0","title":"Wp Latest Post Block","category":"widgets","icon":"admin-post","description":"Display and filter latest posts.","supports":{"html":false},"textdomain":"latest-posts","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","attributes":{"numberOfPosts":{"type":"number","default":5},"displayFeaturedImage":{"type":"boolean","default":true},"order":{"type":"string","default":"desc"},"orderBy":{"type":"string","default":"date"},"categories":{"type":"array","items":{"type":"object"}}}}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"create-block/wp-latest-post-block","version":"0.1.0","title":"Wp Listing Post Block","category":"widgets","icon":"admin-post","description":"Gutenberg Block to list posts with additional features.","supports":{"html":false},"textdomain":"latest-posts","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","attributes":{"numberOfPosts":{"type":"number","default":5},"displayFeaturedImage":{"type":"boolean","default":true},"order":{"type":"string","default":"desc"},"orderBy":{"type":"string","default":"date"},"categories":{"type":"array","items":{"type":"object"}}}}');
 
 /***/ })
 

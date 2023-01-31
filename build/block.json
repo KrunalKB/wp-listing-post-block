@@ -3,10 +3,10 @@
   "apiVersion": 2,
   "name": "create-block/wp-latest-post-block",
   "version": "0.1.0",
-  "title": "Wp Latest Post Block",
+  "title": "Wp Listing Post Block",
   "category": "widgets",
   "icon": "admin-post",
-  "description": "Display and filter latest posts.",
+  "description": "Gutenberg Block to list posts with additional features.",
   "supports": {
     "html": false
   },

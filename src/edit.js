@@ -77,7 +77,7 @@ export default function Edit({ attributes, setAttributes }) {
 					<QueryControls
 						numberOfItems={numberOfPosts}
 						onNumberOfItemsChange={onNumberOfItemsChange}
-						maxItems={10}
+						maxItems={100}
 						minItems={1}
 						orderBy={orderBy}
 						onOrderByChange={(value) => setAttributes({ orderBy: value })}
@@ -104,7 +104,6 @@ export default function Edit({ attributes, setAttributes }) {
 								{displayFeaturedImage && featuredImage && (
 									<img
 										src={featuredImage.source_url}
-										// src={featuredImage.media_details.sizes.medium.source_url}
 										alt={featuredImage.alt_text}
 									/>
 								)}
